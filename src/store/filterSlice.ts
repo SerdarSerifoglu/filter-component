@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface KeyObject {
+    [key: string]: boolean;
+}
 
 export type CheckboxProps = {
     text: string;
@@ -22,6 +25,7 @@ export interface FS {
 export interface InitialStateProps {
     filterList: FS[];
     selectedList: FilterTagProps[];
+    allCheckbox: KeyObject;
 }
 
 var filterList = [{
@@ -39,6 +43,7 @@ var filterList = [{
 {
     filterName: "Konu",
     filterKey: "Subject",
+    allCheckBoxOpen: true,
     checkboxes: [
         { text: "Test1", value: "Test1", checked: false },
         { text: "Test2", value: "Test2", checked: false },
@@ -60,9 +65,19 @@ var filterList = [{
 
 }]
 
+
+var withAllCheckBoxOpen = filterList.filter((e: any) => e.allCheckBoxOpen);
+
+var allCheckBoxStatus: KeyObject = {};
+
+withAllCheckBoxOpen.forEach((e) => {
+    allCheckBoxStatus[e.filterKey] = false;
+});
+
 const initialState: InitialStateProps = {
     filterList: filterList,
-    selectedList: []
+    selectedList: [],
+    allCheckbox: allCheckBoxStatus,
 };
 
 const filterSlice = createSlice({
@@ -76,6 +91,16 @@ const filterSlice = createSlice({
                 let checkbox = filter.checkboxes.find(e => e.value == action.payload.value)
                 if (checkbox != undefined) {
                     checkbox.checked = !checkbox.checked;
+                }
+
+                //tümü seçilimi kontrolü
+                console.log("state.allCheckbox[action.payload.filterKey]", state.allCheckbox[action.payload.filterKey])
+                if (state.allCheckbox[action.payload.filterKey] != undefined && state.allCheckbox[action.payload.filterKey] === false) {
+                    console.log("xxxxxxxx");
+                    console.log("filter.checkboxes.lengt", filter.checkboxes.length)
+                    if (filter.checkboxes.length === filter.checkboxes.filter(e => e.checked).length) {
+                        state.allCheckbox[action.payload.filterKey] = true;
+                    }
                 }
             }
         },
@@ -102,9 +127,14 @@ const filterSlice = createSlice({
             });
 
             state.selectedList = result;
+        },
+        updateCheckedAll: (state, action: PayloadAction<any>) => {
+            if (action.payload.filterKey != undefined) {
+                state.allCheckbox[action.payload.filterKey] = action.payload.value;
+            }
         }
     }
 });
 
-export const { updateFilterList, updateFilterListAll, refreshSelectedList } = filterSlice.actions;
+export const { updateFilterList, updateFilterListAll, refreshSelectedList, updateCheckedAll } = filterSlice.actions;
 export default filterSlice.reducer;

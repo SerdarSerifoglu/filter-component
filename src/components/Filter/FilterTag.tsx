@@ -1,6 +1,7 @@
 import {
   FilterTagProps,
   refreshSelectedList,
+  updateCheckedAll,
   updateFilterList,
 } from "../../store/filterSlice";
 import { useDispatch } from "react-redux";
@@ -41,6 +42,12 @@ const FilterTag = (props: FilterTagProps) => {
       })
     );
     dispatch(refreshSelectedList());
+    dispatch(
+      updateCheckedAll({
+        filterKey: filterKey,
+        value: false,
+      })
+    );
   }
   return (
     <>

@@ -9,6 +9,7 @@ import {
   updateFilterListAll,
   FS,
   refreshSelectedList,
+  updateCheckedAll,
 } from "../../store/filterSlice";
 import { InputAdornment, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
@@ -82,13 +83,14 @@ const FilterPiece = (props: FilterPartProps) => {
   const dispatch = useDispatch();
 
   const selectedList = useSelector((state: any) => state.filter.selectedList);
+  const allCheckbox = useSelector((state: any) => state.filter.allCheckbox);
 
   React.useEffect(() => {
     testFunc();
   }, [selectedList]);
 
   const [searchText, setSearchText] = React.useState<string>("");
-  const [checkedAll, setCheckedAll] = React.useState<boolean>(false);
+  // const [checkedAll, setCheckedAll] = React.useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     console.log("value", event.target.value);
@@ -103,18 +105,33 @@ const FilterPiece = (props: FilterPartProps) => {
     // testFunc();
 
     if (allCheckBoxOpen) {
-      if (event.target.checked == false && checkedAll) {
-        setCheckedAll(!checkedAll);
+      if (event.target.checked == false && allCheckbox[filterKey]) {
+        dispatch(
+          updateCheckedAll({
+            filterKey: filterKey,
+            value: !allCheckbox[filterKey],
+          })
+        );
+        // setCheckedAll(!checkedAll);
       }
     }
   }
 
   const handleChangeAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
-      updateFilterListAll({ currentStatus: checkedAll, filterKey: filterKey })
+      updateFilterListAll({
+        currentStatus: allCheckbox[filterKey],
+        filterKey: filterKey,
+      })
     );
     dispatch(refreshSelectedList());
-    setCheckedAll(!checkedAll);
+    // setCheckedAll(!checkedAll);
+    dispatch(
+      updateCheckedAll({
+        filterKey: filterKey,
+        value: !allCheckbox[filterKey],
+      })
+    );
   };
 
   const testFunc = () => {
@@ -167,7 +184,7 @@ const FilterPiece = (props: FilterPartProps) => {
                 }}
                 onChange={handleChangeAll}
                 value={"All"}
-                checked={checkedAll}
+                checked={allCheckbox[filterKey]}
                 size="small"
               />
             }
