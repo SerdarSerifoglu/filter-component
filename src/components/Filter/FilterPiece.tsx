@@ -10,7 +10,7 @@ import {
   FS,
   refreshSelectedList,
 } from "../../store/filterSlice";
-import { TextField, Typography } from "@mui/material";
+import { InputAdornment, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
 //#region STYLES
@@ -21,6 +21,8 @@ const Title = styled.h2`
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
+  margin-bottom: 8px;
+  margin-top: 8px;
 `;
 
 const CheckboxLabelStyle = styled(Typography)`
@@ -31,7 +33,34 @@ const CheckboxLabelStyle = styled(Typography)`
   line-height: 17px;
 `;
 
+const SearchField = styled(TextField)`
+  margin-bottom: 8px;
+`;
+
 //#endregion
+
+interface HeaderIconsProps {
+  color: string;
+  className?: string;
+
+  onClick?: () => void;
+}
+const SearchIcon = (props: HeaderIconsProps) => (
+  <svg
+    className={props.className}
+    onClick={props.onClick}
+    width="16"
+    height="17"
+    viewBox="0 0 16 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13 6.5C13 7.93437 12.5344 9.25937 11.75 10.3344L15.7062 14.2937C16.0969 14.6844 16.0969 15.3188 15.7062 15.7094C15.3156 16.1 14.6812 16.1 14.2906 15.7094L10.3344 11.75C9.25937 12.5375 7.93437 13 6.5 13C2.90937 13 0 10.0906 0 6.5C0 2.90937 2.90937 0 6.5 0C10.0906 0 13 2.90937 13 6.5ZM6.5 11C8.98437 11 11 8.98437 11 6.5C11 4.01562 8.98437 2 6.5 2C4.01562 2 2 4.01562 2 6.5C2 8.98437 4.01562 11 6.5 11Z"
+      fill={props.color}
+    />
+  </svg>
+);
 
 type FilterPartProps = {
   checkboxList: CheckboxProps[];
@@ -103,14 +132,20 @@ const FilterPiece = (props: FilterPartProps) => {
     <>
       <Title>{title}</Title>
       {searchBoxOpen ? (
-        <TextField
-          id="outlined-basic"
-          label="Outlined"
-          variant="outlined"
+        <SearchField
+          id="asd"
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
           }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon color="#CF7B00" />
+              </InputAdornment>
+            ),
+          }}
+          size="small"
         />
       ) : (
         ""
@@ -123,6 +158,7 @@ const FilterPiece = (props: FilterPartProps) => {
                 sx={{
                   [`&`]: {
                     color: "#A0A0A0",
+                    padding: "4px 8px",
                   },
                   [`&.${checkboxClasses.checked}`]: {
                     color: "#CF7B00",
@@ -148,6 +184,7 @@ const FilterPiece = (props: FilterPartProps) => {
                     sx={{
                       [`&`]: {
                         color: "#A0A0A0",
+                        padding: "4px 8px",
                       },
                       [`&.${checkboxClasses.checked}`]: {
                         color: "#CF7B00",
