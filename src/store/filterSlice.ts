@@ -7,6 +7,10 @@ export type CheckboxProps = {
     checked: boolean;
 };
 
+export interface FilterTagProps extends CheckboxProps {
+    filterKey: string;
+}
+
 export interface FS {
     filterName: string;
     filterKey: string;
@@ -16,9 +20,8 @@ export interface FS {
 }
 
 export interface InitialStateProps {
-    filter: string;
     filterList: FS[];
-    selectedList: any[];
+    selectedList: FilterTagProps[];
 }
 
 var filterList = [{
@@ -58,7 +61,6 @@ var filterList = [{
 }]
 
 const initialState: InitialStateProps = {
-    filter: "",
     filterList: filterList,
     selectedList: []
 };
@@ -67,9 +69,6 @@ const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        filterTest: (state) => {
-            state.filter = "TEST 123"
-        },
         updateFilterList: (state, action: PayloadAction<any>) => {
             let filter = state.filterList.find(e => e.filterKey == action.payload.filterKey);
 
@@ -93,9 +92,13 @@ const filterSlice = createSlice({
                 var filterKey = e.filterKey;
                 var checkedList = e.checkboxes
                     .filter((x) => x.checked)
-                    .map((m) => m.value)
-                    .join(",");
-                result.push({ fk: filterKey, values: checkedList });
+                    .map((m: any) => {
+                        m.filterKey = filterKey;
+                        return m;
+                    });
+                if (checkedList != undefined && checkedList.length > 0) {
+                    result.push(...checkedList);
+                }
             });
 
             state.selectedList = result;
@@ -103,5 +106,5 @@ const filterSlice = createSlice({
     }
 });
 
-export const { filterTest, updateFilterList, updateFilterListAll, refreshSelectedList } = filterSlice.actions;
+export const { updateFilterList, updateFilterListAll, refreshSelectedList } = filterSlice.actions;
 export default filterSlice.reducer;

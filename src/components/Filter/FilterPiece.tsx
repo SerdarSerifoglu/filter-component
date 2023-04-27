@@ -113,6 +113,7 @@ const FilterPiece = (props: FilterPartProps) => {
     dispatch(
       updateFilterListAll({ currentStatus: checkedAll, filterKey: filterKey })
     );
+    dispatch(refreshSelectedList());
     setCheckedAll(!checkedAll);
   };
 

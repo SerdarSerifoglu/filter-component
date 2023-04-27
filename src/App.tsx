@@ -2,11 +2,15 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Filter from "./components/Filter/Filter";
+import CheckedCheckboxes from "./components/Filter/CheckedCheckboxes";
 
 function App() {
   return (
     <>
-      <Filter />
+      <div style={{ display: "flex" }}>
+        <Filter />
+        <CheckedCheckboxes />
+      </div>
     </>
   );
 }
