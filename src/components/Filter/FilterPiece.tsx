@@ -1,7 +1,7 @@
 import * as React from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox, { checkboxClasses } from "@mui/material/Checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateFilterList,
@@ -10,7 +10,28 @@ import {
   FS,
   refreshSelectedList,
 } from "../../store/filterSlice";
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
+import styled from "@emotion/styled";
+
+//#region STYLES
+
+const Title = styled.h2`
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+`;
+
+const CheckboxLabelStyle = styled(Typography)`
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+`;
+
+//#endregion
 
 type FilterPartProps = {
   checkboxList: CheckboxProps[];
@@ -80,31 +101,40 @@ const FilterPiece = (props: FilterPartProps) => {
 
   return (
     <>
-      <h1>{title}</h1>
+      <Title>{title}</Title>
+      {searchBoxOpen ? (
+        <TextField
+          id="outlined-basic"
+          label="Outlined"
+          variant="outlined"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+      ) : (
+        ""
+      )}
       <FormGroup>
-        {searchBoxOpen ? (
-          <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-          />
-        ) : (
-          ""
-        )}
         {allCheckBoxOpen && searchText == "" ? (
           <FormControlLabel
             control={
               <Checkbox
+                sx={{
+                  [`&`]: {
+                    color: "#A0A0A0",
+                  },
+                  [`&.${checkboxClasses.checked}`]: {
+                    color: "#CF7B00",
+                  },
+                }}
                 onChange={handleChangeAll}
                 value={"All"}
                 checked={checkedAll}
+                size="small"
               />
             }
-            label={"Tümü"}
+            label={<CheckboxLabelStyle>Tüm</CheckboxLabelStyle>}
           />
         ) : (
           ""
@@ -115,12 +145,21 @@ const FilterPiece = (props: FilterPartProps) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{
+                      [`&`]: {
+                        color: "#A0A0A0",
+                      },
+                      [`&.${checkboxClasses.checked}`]: {
+                        color: "#CF7B00",
+                      },
+                    }}
                     onChange={handleChange}
                     value={e.value}
                     checked={e.checked}
+                    size="small"
                   />
                 }
-                label={e.text}
+                label={<CheckboxLabelStyle>{e.text}</CheckboxLabelStyle>}
               />
             </>
           );
