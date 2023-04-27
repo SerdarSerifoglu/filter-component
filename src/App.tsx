@@ -1,12 +1,12 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import FilterWrapper from "./components/Filter/FilterWrapper";
+import Filter from "./components/Filter/Filter";
 
 function App() {
   return (
     <>
-      <FilterWrapper />
+      <Filter />
     </>
   );
 }

@@ -1,131 +1,43 @@
-import * as React from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import FilterPiece from "./FilterPiece";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateFilterList,
-  CheckboxProps,
-  updateFilterListAll,
-  FS,
-  refreshSelectedList,
-} from "../../store/filterSlice";
-import { TextField } from "@mui/material";
+import { FS } from "../../store/filterSlice";
+const Filter = () => {
+  const filterList = useSelector((state: any) => state.filter.filterList);
 
-type FilterProps = {
-  checkboxList: CheckboxProps[];
-  title: string;
-  filterKey: string;
-  searchBoxOpen?: boolean;
-  allCheckBoxOpen?: boolean;
-};
+  function findCheckedCheckboxes(list: FS[]) {
+    let result: any[] = [];
+    list.forEach((e) => {
+      var filterKey = e.filterKey;
+      var checkedList = e.checkboxes
+        .filter((x) => x.checked)
+        .map((m) => m.value)
+        .join(",");
+      result.push({ fk: filterKey, values: checkedList });
+    });
 
-const Filter = (props: FilterProps) => {
-  console.log("Filter_rendered");
-  let {
-    checkboxList,
-    title,
-    filterKey,
-    searchBoxOpen = false,
-    allCheckBoxOpen = false,
-  } = props;
-  const dispatch = useDispatch();
-
-  const selectedList = useSelector((state: any) => state.filter.selectedList);
-
-  React.useEffect(() => {
-    testFunc();
-  }, [selectedList]);
-
-  const [searchText, setSearchText] = React.useState<string>("");
-  const [checkedAll, setCheckedAll] = React.useState<boolean>(false);
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log("value", event.target.value);
-    console.log("checked", event.target.checked);
-    console.log("filterKey", filterKey);
-    dispatch(
-      updateFilterList({ filterKey: filterKey, value: event.target.value })
-    );
-    dispatch(refreshSelectedList());
-    console.log("selectedList", selectedList);
-    // console.log("filterList", filterList);
-    // testFunc();
-
-    if (allCheckBoxOpen) {
-      if (event.target.checked == false && checkedAll) {
-        setCheckedAll(!checkedAll);
-      }
-    }
-  }
-
-  const handleChangeAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateFilterListAll({ currentStatus: checkedAll, filterKey: filterKey })
-    );
-    setCheckedAll(!checkedAll);
-  };
-
-  const testFunc = () => {
-    console.log("selectedList_testFunc", selectedList);
-  };
-
-  if (searchBoxOpen) {
-    if (searchText != "") {
-      checkboxList = checkboxList.filter((e) =>
-        e.text.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
+    return result;
   }
 
   return (
     <>
-      <h1>{title}</h1>
-      <FormGroup>
-        {searchBoxOpen ? (
-          <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-          />
-        ) : (
-          ""
-        )}
-        {allCheckBoxOpen && searchText == "" ? (
-          <FormControlLabel
-            control={
-              <Checkbox
-                onChange={handleChangeAll}
-                value={"All"}
-                checked={checkedAll}
-              />
-            }
-            label={"Tümü"}
-          />
-        ) : (
-          ""
-        )}
-        {checkboxList.map((e) => {
-          return (
-            <>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={handleChange}
-                    value={e.value}
-                    checked={e.checked}
-                  />
-                }
-                label={e.text}
-              />
-            </>
-          );
-        })}
-      </FormGroup>
+      <button
+        onClick={() => {
+          console.log(findCheckedCheckboxes(filterList));
+        }}
+      >
+        SERDAR
+      </button>
+      {filterList.map((e: any) => {
+        return (
+          <FilterPiece
+            filterKey={e.filterKey}
+            title={e.filterName}
+            checkboxList={e.checkboxes}
+            searchBoxOpen={e.searchBoxOpen}
+            allCheckBoxOpen={e.allCheckBoxOpen}
+          ></FilterPiece>
+        );
+      })}
     </>
   );
 };
