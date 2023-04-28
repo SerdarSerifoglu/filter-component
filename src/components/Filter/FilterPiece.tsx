@@ -93,7 +93,9 @@ const FilterPiece = (props: FilterPartProps) => {
   const dispatch = useDispatch();
 
   const selectedList = useSelector((state: any) => state.filter.selectedList);
-  const allCheckbox = useSelector((state: any) => state.filter.allCheckbox);
+  const allCheckboxStatus = useSelector(
+    (state: any) => state.filter.allCheckbox[filterKey]
+  );
 
   React.useEffect(() => {
     testFunc();
@@ -115,11 +117,11 @@ const FilterPiece = (props: FilterPartProps) => {
     // testFunc();
 
     if (allCheckBoxOpen) {
-      if (event.target.checked == false && allCheckbox[filterKey]) {
+      if (event.target.checked == false && allCheckboxStatus) {
         dispatch(
           updateCheckedAll({
             filterKey: filterKey,
-            value: !allCheckbox[filterKey],
+            value: !allCheckboxStatus,
           })
         );
         // setCheckedAll(!checkedAll);
@@ -130,7 +132,7 @@ const FilterPiece = (props: FilterPartProps) => {
   const handleChangeAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateFilterListAll({
-        currentStatus: allCheckbox[filterKey],
+        currentStatus: allCheckboxStatus,
         filterKey: filterKey,
       })
     );
@@ -139,7 +141,7 @@ const FilterPiece = (props: FilterPartProps) => {
     dispatch(
       updateCheckedAll({
         filterKey: filterKey,
-        value: !allCheckbox[filterKey],
+        value: !allCheckboxStatus,
       })
     );
   };
@@ -194,7 +196,7 @@ const FilterPiece = (props: FilterPartProps) => {
                 }}
                 onChange={handleChangeAll}
                 value={"All"}
-                checked={allCheckbox[filterKey]}
+                checked={allCheckboxStatus}
                 size="small"
               />
             }
