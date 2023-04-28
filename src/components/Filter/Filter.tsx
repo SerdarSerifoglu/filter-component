@@ -2,6 +2,7 @@ import FilterPiece from "./FilterPiece";
 import { useDispatch, useSelector } from "react-redux";
 import { FS, clearFilter, refreshSelectedList } from "../../store/filterSlice";
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 
 const FilterWrapper = styled.div`
   width: 268px;
@@ -10,31 +11,17 @@ const FilterWrapper = styled.div`
 
 const Filter = () => {
   const filterList = useSelector((state: any) => state.filter.filterList);
+  const selectedList = useSelector((state: any) => state.filter.selectedList);
   const dispatch = useDispatch();
-  // function findCheckedCheckboxes(list: FS[]) {
-  //   let result: any[] = [];
-  //   list.forEach((e) => {
-  //     var filterKey = e.filterKey;
-  //     var checkedList = e.checkboxes
-  //       .filter((x) => x.checked)
-  //       .map((m) => m.value)
-  //       .join(",");
-  //     result.push({ fk: filterKey, values: checkedList });
-  //   });
 
-  //   return result;
-  // }
+  useEffect(() => {
+    //Filtre'te göre istek buradan atılacak
+    //filtrede herhangi bir checkbox'a tıklandığında burası tetiklenir diye düşündüm.
+    console.log("clickedCheckbox");
+  }, [selectedList]);
 
   return (
     <>
-      {/* <button
-        onClick={() => {
-          console.log(findCheckedCheckboxes(filterList));
-        }}
-      >
-        SERDAR
-      </button> */}
-
       <FilterWrapper>
         <button
           onClick={() => {

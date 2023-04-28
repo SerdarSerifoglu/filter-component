@@ -31,6 +31,16 @@ export interface InitialStateProps {
     searchInput: KeyObjectString;
 }
 
+/*
+filterName: Filtre'nin başlığı
+filterKey: Yapıda kullanılan filtre kimliği
+searchBoxOpen: Filtre parçasında search alanının olup olmayacağını belirliyor
+allCheckBoxOpen: Filtre'de Tümü checkbox'ının olup olmayacağını belirliyor
+checkboxes: bu array içerisindeki alanlar kadar filtre içinde checkbox oluşuyor
+    text: Checkbox'ta görüntülenecek yazı
+    value: Checkbox'ın değer datası
+    checked: Checkbox'ın seçili olup olmadığını belirten değer
+*/
 var filterList = [{
     filterName: "Eğitim Adı",
     filterKey: "EducationName",
@@ -186,11 +196,8 @@ const filterSlice = createSlice({
                     checkbox.checked = !checkbox.checked;
                 }
 
-                //tümü seçilimi kontrolü
-                console.log("state.allCheckbox[action.payload.filterKey]", state.allCheckbox[action.payload.filterKey])
+                //tümü seçilimi? kontrolü
                 if (state.allCheckbox[action.payload.filterKey] != undefined && state.allCheckbox[action.payload.filterKey] === false) {
-                    console.log("xxxxxxxx");
-                    console.log("filter.checkboxes.lengt", filter.checkboxes.length)
                     if (filter.checkboxes.length === filter.checkboxes.filter(e => e.checked).length) {
                         state.allCheckbox[action.payload.filterKey] = true;
                     }

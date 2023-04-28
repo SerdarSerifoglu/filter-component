@@ -83,7 +83,6 @@ type FilterPartProps = {
 };
 
 const FilterPiece = (props: FilterPartProps) => {
-  console.log("FilterPart_rendered");
   let {
     checkboxList,
     title,
@@ -101,24 +100,11 @@ const FilterPiece = (props: FilterPartProps) => {
     (state: any) => state.filter.searchInput[filterKey]
   );
 
-  React.useEffect(() => {
-    testFunc();
-  }, [selectedList]);
-
-  // const [searchText, setSearchText] = React.useState<string>("");
-  // const [checkedAll, setCheckedAll] = React.useState<boolean>(false);
-
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log("value", event.target.value);
-    console.log("checked", event.target.checked);
-    console.log("filterKey", filterKey);
     dispatch(
       updateFilterList({ filterKey: filterKey, value: event.target.value })
     );
     dispatch(refreshSelectedList());
-    console.log("selectedList", selectedList);
-    // console.log("filterList", filterList);
-    // testFunc();
 
     if (allCheckBoxOpen) {
       if (event.target.checked == false && allCheckboxStatus) {
@@ -128,7 +114,6 @@ const FilterPiece = (props: FilterPartProps) => {
             value: !allCheckboxStatus,
           })
         );
-        // setCheckedAll(!checkedAll);
       }
     }
   }
@@ -141,17 +126,12 @@ const FilterPiece = (props: FilterPartProps) => {
       })
     );
     dispatch(refreshSelectedList());
-    // setCheckedAll(!checkedAll);
     dispatch(
       updateCheckedAll({
         filterKey: filterKey,
         value: !allCheckboxStatus,
       })
     );
-  };
-
-  const testFunc = () => {
-    console.log("selectedList_testFunc", selectedList);
   };
 
   if (searchBoxOpen) {
