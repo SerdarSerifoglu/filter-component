@@ -29,41 +29,127 @@ export interface InitialStateProps {
 }
 
 var filterList = [{
-    filterName: "Kategori",
-    filterKey: "Category",
+    filterName: "Eğitim Adı",
+    filterKey: "EducationName",
     searchBoxOpen: true,
     allCheckBoxOpen: true,
     checkboxes: [
-        { text: "Test1", value: "Test1", checked: false },
-        { text: "Test2", value: "Test2", checked: false },
-        { text: "Test3", value: "Test3", checked: false },
+        { text: "Fotoğraf", value: "Fotograf", checked: false },
+        { text: "Yazılım", value: "Yazilim", checked: false },
+        { text: "Eğitim Test", value: "EgitimTest", checked: false },
+        { text: "Eğitim Test 2", value: "EgitimTest2", checked: false },
+        { text: "Eğitim Test 3", value: "EgitimTest3", checked: false },
+        { text: "Eğitim Test 4", value: "EgitimTest4", checked: false },
+        { text: "Eğitim Test 5", value: "EgitimTest5", checked: false },
+
+    ]
+},
+{
+    filterName: "Eğitim Tipi",
+    filterKey: "EducationType",
+    checkboxes: [
+        { text: "Online", value: "Online", checked: false },
+        { text: "Sınıf İçi", value: "SinifIci", checked: false },
     ]
 
 },
 {
-    filterName: "Konu",
-    filterKey: "Subject",
+    filterName: "Eğitim Kategorisi",
+    filterKey: "EducationCategory",
+    searchBoxOpen: true,
     allCheckBoxOpen: true,
     checkboxes: [
-        { text: "Test1", value: "Test1", checked: false },
-        { text: "Test2", value: "Test2", checked: false },
-        { text: "Test3", value: "Test3", checked: false },
+        { text: "Eğitim Kategorisi", value: "EgitimKategorisi", checked: false },
+        { text: "Eğitim Kategorisi 2", value: "EgitimKategorisi2", checked: false },
+        { text: "Eğitim Kategorisi 3", value: "EgitimKategorisi3", checked: false },
+        { text: "Eğitim Kategorisi 4", value: "EgitimKategorisi4", checked: false },
+        { text: "Eğitim Kategorisi 5", value: "EgitimKategorisi5", checked: false },
+
     ]
 
 },
 {
-    filterName: "Eğitim Özellikleri",
-    filterKey: "EducationFeatures",
+    filterName: "Eğitim Alt Kategorisi",
+    filterKey: "EducationAltCategory",
+    searchBoxOpen: true,
+    allCheckBoxOpen: true,
     checkboxes: [
-        { text: "Test1", value: "Test1", checked: false },
-        { text: "Test2", value: "Test2", checked: false },
-        { text: "Test3", value: "Test3", checked: false },
-        { text: "Test4", value: "Test4", checked: false },
-        { text: "Test5", value: "Test5", checked: false },
-        { text: "Test6", value: "Test6", checked: false },
+        { text: "Eğitim Alt Kategorisi", value: "EgitimAltKategorisi", checked: false },
+        { text: "Eğitim Alt Kategorisi 2", value: "EgitimAltKategorisi2", checked: false },
+        { text: "Eğitim Alt Kategorisi 3", value: "EgitimAltKategorisi3", checked: false },
+        { text: "Eğitim Alt Kategorisi 4", value: "EgitimAltKategorisi4", checked: false },
+        { text: "Eğitim Alt Kategorisi 5", value: "EgitimAltKategorisi5", checked: false },
+
     ]
 
-}]
+},
+{
+    filterName: "Eğitim Sunum Yöntemi",
+    filterKey: "EducationDeliverMethod",
+    checkboxes: [
+        { text: "Online", value: "Online", checked: false },
+        { text: "Sınıf İçi", value: "SinifIci", checked: false },
+    ]
+
+},
+{
+    filterName: "Eğitim Dili",
+    filterKey: "EducationLanguage",
+    checkboxes: [
+        { text: "Türkçe", value: "Turkce", checked: false },
+        { text: "İngilizce", value: "English", checked: false },
+
+    ]
+
+},
+{
+    filterName: "Eğitim Şirketi",
+    filterKey: "EducationCompany",
+    searchBoxOpen: true,
+    allCheckBoxOpen: true,
+    checkboxes: [
+        { text: "Eğitim Şirketi", value: "EgitimSirketi", checked: false },
+        { text: "Eğitim Şirketi 2", value: "EgitimSirketi2", checked: false },
+        { text: "Eğitim Şirketi 3", value: "EgitimSirketi3", checked: false },
+        { text: "Eğitim Şirketi 4", value: "EgitimSirketi4", checked: false },
+        { text: "Eğitim Şirketi 5", value: "EgitimSirketi5", checked: false },
+
+    ]
+
+},
+{
+    filterName: "Eğitim Seviyesi",
+    filterKey: "EducationLevel",
+    checkboxes: [
+        { text: "Başlangıç", value: "Baslangic", checked: false },
+        { text: "İleri", value: "Ileri", checked: false },
+
+    ]
+
+},
+{
+    filterName: "Eğitim Etiketleri",
+    filterKey: "EducationCompany",
+    searchBoxOpen: true,
+    allCheckBoxOpen: true,
+    checkboxes: [
+        { text: "Eğitim Etiketleri", value: "EgitimEtiketleri", checked: false },
+        { text: "Eğitim Etiketleri 2", value: "EgitimEtiketleri2", checked: false },
+        { text: "Eğitim Etiketleri 3", value: "EgitimEtiketleri3", checked: false },
+        { text: "Eğitim Etiketleri 4", value: "EgitimEtiketleri4", checked: false },
+        { text: "Eğitim Etiketleri 5", value: "EgitimEtiketleri5", checked: false },
+    ]
+},
+{
+    filterName: "Sertifika",
+    filterKey: "Sertifika",
+    checkboxes: [
+        { text: "Var", value: "Var", checked: false },
+        { text: "Yok", value: "Yok", checked: false },
+
+    ]
+
+},]
 
 
 var withAllCheckBoxOpen = filterList.filter((e: any) => e.allCheckBoxOpen);
