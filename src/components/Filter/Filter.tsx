@@ -1,6 +1,6 @@
 import FilterPiece from "./FilterPiece";
 import { useDispatch, useSelector } from "react-redux";
-import { FS } from "../../store/filterSlice";
+import { FS, clearFilter, refreshSelectedList } from "../../store/filterSlice";
 import styled from "@emotion/styled";
 
 const FilterWrapper = styled.div`
@@ -10,7 +10,7 @@ const FilterWrapper = styled.div`
 
 const Filter = () => {
   const filterList = useSelector((state: any) => state.filter.filterList);
-
+  const dispatch = useDispatch();
   // function findCheckedCheckboxes(list: FS[]) {
   //   let result: any[] = [];
   //   list.forEach((e) => {
@@ -34,7 +34,16 @@ const Filter = () => {
       >
         SERDAR
       </button> */}
+
       <FilterWrapper>
+        <button
+          onClick={() => {
+            dispatch(clearFilter());
+            dispatch(refreshSelectedList());
+          }}
+        >
+          Filtreyi Temizle
+        </button>
         {filterList.map((e: any) => {
           return (
             <FilterPiece

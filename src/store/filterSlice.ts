@@ -129,7 +129,7 @@ var filterList = [{
 },
 {
     filterName: "Eğitim Etiketleri",
-    filterKey: "EducationCompany",
+    filterKey: "EducationTag",
     searchBoxOpen: true,
     allCheckBoxOpen: true,
     checkboxes: [
@@ -149,7 +149,7 @@ var filterList = [{
 
     ]
 
-},]
+}]
 
 
 var withAllCheckBoxOpen = filterList.filter((e: any) => e.allCheckBoxOpen);
@@ -197,6 +197,15 @@ const filterSlice = createSlice({
                 filter.checkboxes.forEach(e => action.payload.currentStatus ? e.checked = false : e.checked = true);
             }
         },
+        clearFilter: (state) => {
+            state.filterList.forEach((e) => {
+                e.checkboxes.forEach(c => { c.checked = false })
+            })
+
+            for (const property in state.allCheckbox) {
+                state.allCheckbox[property] = false;
+            }
+        },
         refreshSelectedList: (state) => {
             let result: any[] = [];
             state.filterList.forEach((e) => {
@@ -218,9 +227,9 @@ const filterSlice = createSlice({
             if (action.payload.filterKey != undefined) {
                 state.allCheckbox[action.payload.filterKey] = action.payload.value;
             }
-        }
+        },
     }
 });
 
-export const { updateFilterList, updateFilterListAll, refreshSelectedList, updateCheckedAll } = filterSlice.actions;
+export const { updateFilterList, updateFilterListAll, clearFilter, refreshSelectedList, updateCheckedAll } = filterSlice.actions;
 export default filterSlice.reducer;

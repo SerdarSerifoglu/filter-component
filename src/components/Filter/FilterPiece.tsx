@@ -45,6 +45,9 @@ const FormGroupStyle = styled(FormGroup)`
   flex-wrap: nowrap;
 `;
 
+const FormControlLabelStyle = styled(FormControlLabel)`
+  padding: 1px;
+`;
 //#endregion
 
 interface HeaderIconsProps {
@@ -177,7 +180,7 @@ const FilterPiece = (props: FilterPartProps) => {
       )}
       <FormGroupStyle>
         {allCheckBoxOpen && searchText == "" ? (
-          <FormControlLabel
+          <FormControlLabelStyle
             control={
               <Checkbox
                 sx={{
@@ -203,7 +206,7 @@ const FilterPiece = (props: FilterPartProps) => {
         {checkboxList.map((e) => {
           return (
             <>
-              <FormControlLabel
+              <FormControlLabelStyle
                 control={
                   <Checkbox
                     sx={{
