@@ -14,6 +14,7 @@ const FilterTagWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
   padding: 8px 12px;
   gap: 7px;
   height: 32px;

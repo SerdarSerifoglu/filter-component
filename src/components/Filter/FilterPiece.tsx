@@ -38,6 +38,13 @@ const SearchField = styled(TextField)`
   margin-bottom: 8px;
 `;
 
+const FormGroupStyle = styled(FormGroup)`
+  max-height: 192px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: nowrap;
+`;
+
 //#endregion
 
 interface HeaderIconsProps {
@@ -168,7 +175,7 @@ const FilterPiece = (props: FilterPartProps) => {
       ) : (
         ""
       )}
-      <FormGroup>
+      <FormGroupStyle>
         {allCheckBoxOpen && searchText == "" ? (
           <FormControlLabel
             control={
@@ -188,7 +195,7 @@ const FilterPiece = (props: FilterPartProps) => {
                 size="small"
               />
             }
-            label={<CheckboxLabelStyle>Tüm</CheckboxLabelStyle>}
+            label={<CheckboxLabelStyle>Tümü</CheckboxLabelStyle>}
           />
         ) : (
           ""
@@ -219,7 +226,7 @@ const FilterPiece = (props: FilterPartProps) => {
             </>
           );
         })}
-      </FormGroup>
+      </FormGroupStyle>
     </>
   );
 };

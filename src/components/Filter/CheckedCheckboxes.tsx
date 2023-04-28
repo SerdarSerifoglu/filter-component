@@ -3,7 +3,11 @@ import FilterTag from "./FilterTag";
 import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
+  width: calc(100vw - 400px);
+  max-width: calc(100vw - 400px);
+  height: min-content;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 `;
 
