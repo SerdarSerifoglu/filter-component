@@ -3,6 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface KeyObject {
     [key: string]: boolean;
 }
+export interface KeyObjectString {
+    [key: string]: string;
+}
 
 export type CheckboxProps = {
     text: string;
@@ -18,7 +21,6 @@ export interface FS {
     filterName: string;
     filterKey: string;
     searchBoxOpen?: boolean;
-    allCheckBoxOpen?: boolean;
     checkboxes: CheckboxProps[];
 }
 
@@ -26,6 +28,7 @@ export interface InitialStateProps {
     filterList: FS[];
     selectedList: FilterTagProps[];
     allCheckbox: KeyObject;
+    searchInput: KeyObjectString;
 }
 
 var filterList = [{
@@ -151,19 +154,23 @@ var filterList = [{
 
 }]
 
-
 var withAllCheckBoxOpen = filterList.filter((e: any) => e.allCheckBoxOpen);
-
 var allCheckBoxStatus: KeyObject = {};
-
 withAllCheckBoxOpen.forEach((e) => {
     allCheckBoxStatus[e.filterKey] = false;
+});
+
+var withSearchBoxOpen = filterList.filter((e: any) => e.searchBoxOpen);
+var searchBoxStatus: KeyObjectString = {};
+withSearchBoxOpen.forEach((e) => {
+    searchBoxStatus[e.filterKey] = "";
 });
 
 const initialState: InitialStateProps = {
     filterList: filterList,
     selectedList: [],
     allCheckbox: allCheckBoxStatus,
+    searchInput: searchBoxStatus,
 };
 
 const filterSlice = createSlice({
@@ -205,6 +212,10 @@ const filterSlice = createSlice({
             for (const property in state.allCheckbox) {
                 state.allCheckbox[property] = false;
             }
+
+            for (const property in state.searchInput) {
+                state.searchInput[property] = "";
+            }
         },
         refreshSelectedList: (state) => {
             let result: any[] = [];
@@ -228,8 +239,13 @@ const filterSlice = createSlice({
                 state.allCheckbox[action.payload.filterKey] = action.payload.value;
             }
         },
+        updateSearchInputs: (state, action: PayloadAction<any>) => {
+            if (action.payload.filterKey != undefined) {
+                state.searchInput[action.payload.filterKey] = action.payload.value;
+            }
+        },
     }
 });
 
-export const { updateFilterList, updateFilterListAll, clearFilter, refreshSelectedList, updateCheckedAll } = filterSlice.actions;
+export const { updateFilterList, updateFilterListAll, clearFilter, refreshSelectedList, updateCheckedAll, updateSearchInputs } = filterSlice.actions;
 export default filterSlice.reducer;

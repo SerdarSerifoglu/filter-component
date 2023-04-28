@@ -10,6 +10,7 @@ import {
   FS,
   refreshSelectedList,
   updateCheckedAll,
+  updateSearchInputs,
 } from "../../store/filterSlice";
 import { InputAdornment, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
@@ -96,12 +97,15 @@ const FilterPiece = (props: FilterPartProps) => {
   const allCheckboxStatus = useSelector(
     (state: any) => state.filter.allCheckbox[filterKey]
   );
+  const searchInputValue = useSelector(
+    (state: any) => state.filter.searchInput[filterKey]
+  );
 
   React.useEffect(() => {
     testFunc();
   }, [selectedList]);
 
-  const [searchText, setSearchText] = React.useState<string>("");
+  // const [searchText, setSearchText] = React.useState<string>("");
   // const [checkedAll, setCheckedAll] = React.useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -151,9 +155,9 @@ const FilterPiece = (props: FilterPartProps) => {
   };
 
   if (searchBoxOpen) {
-    if (searchText != "") {
+    if (searchInputValue != "") {
       checkboxList = checkboxList.filter((e) =>
-        e.text.toLowerCase().includes(searchText.toLowerCase())
+        e.text.toLowerCase().includes(searchInputValue.toLowerCase())
       );
     }
   }
@@ -164,9 +168,9 @@ const FilterPiece = (props: FilterPartProps) => {
       {searchBoxOpen ? (
         <SearchField
           id="asd"
-          value={searchText}
+          value={searchInputValue}
           onChange={(e) => {
-            setSearchText(e.target.value);
+            dispatch(updateSearchInputs({ filterKey, value: e.target.value }));
           }}
           InputProps={{
             startAdornment: (
@@ -181,7 +185,7 @@ const FilterPiece = (props: FilterPartProps) => {
         ""
       )}
       <FormGroupStyle>
-        {allCheckBoxOpen && searchText == "" ? (
+        {allCheckBoxOpen && searchInputValue == "" ? (
           <FormControlLabelStyle
             control={
               <Checkbox
